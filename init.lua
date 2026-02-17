@@ -10,6 +10,7 @@ if not vim.uv.fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
+vim.g.copilot_node_command = "~/.nvm/versions/node/v24.13.1/bin/node" -- Ajuste a versão conforme o seu 'node -v'
 
 local lazy_config = require "configs.lazy"
 

@@ -6,12 +6,40 @@ return {
   },
 
   -- These are some examples, uncomment them if you want to see them work!
+
+  -- Rustaceanvim (LSP e Debug para Rust)
   {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-    end,
+    'mrcjkb/rustaceanvim',
+    version = '^8', -- Versão estável para evitar erros de sintaxe no WSL
+    lazy = false,
   },
+
+  -- 4. Suporte básico e auto-format para Rust
+  {
+    'rust-lang/rust.vim',
+    ft = "rust",
+    init = function ()
+      vim.g.rustfmt_autosave = 1
+    end
+  },
+
+  -- 5. Gerenciamento de Crates (Cargo.toml)
+  {
+    'saecki/crates.nvim',
+    ft = {"toml"},
+    config = function()
+      require("crates").setup {
+        completion = {
+          cmp = { enabled = true },
+        },
+      }
+      require('cmp').setup.buffer({
+        sources = { { name = "crates" }}
+      })
+    end
+  },
+
+
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
@@ -28,6 +56,9 @@ return {
       })
     end,
   },
+
+
+
 
   {
     "CopilotC-Nvim/CopilotChat.nvim",

@@ -1,6 +1,12 @@
-require("nvchad.configs.lspconfig").defaults()
+local lspconfig = require "lspconfig"
+local nvlsp = require "nvchad.configs.lspconfig"
 
-local servers = { "html", "cssls" }
-vim.lsp.enable(servers)
+-- Configuração padrão do NvChad
+nvlsp.defaults()
 
--- read :h vim.lsp.config for changing options of lsp servers 
+-- Ativar o rust-analyzer
+lspconfig.rust_analyzer.setup({
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+})
