@@ -3,6 +3,18 @@
 -- abaixo via mason-lspconfig ensure_installed.
 
 return {
+  
+
+  -- Carrega as configs do lspconfig.lua
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function ()
+      require "configs.lspconfig"
+    end,
+  },
+
+
   -- Auto-instalação dos LSPs via Mason
   {
     "williamboman/mason-lspconfig.nvim",

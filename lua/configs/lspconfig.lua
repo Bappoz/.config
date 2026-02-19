@@ -1,45 +1,43 @@
-local lspconfig = require "lspconfig"
-local nvlsp = require "nvchad.configs.lspconfig"
 
--- Configuração padrão do NvChad
-nvlsp.defaults()
+-- Nova API do nvim-lspconfig v3.0
 
--- Helper: setup com defaults do NvChad
-local function setup(server, opts)
-  lspconfig[server].setup(vim.tbl_deep_extend("force", {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  }, opts or {}))
-end
+local capabilities = vim.tbl_deep_extend(
+  "force",
+  vim.lsp.protocol.make_client_capabilities(),
+  require("cmp_nvim_lsp").default_capabilities()
+)
+
+-- Suprime o warning do workspace/diagnostic/refresh
+vim.lsp.handlers["workspace/diagnostic/refresh"] = function() end
 
 -- C e C++ -------------------------------------------------------
-setup("clangd", {
+vim.lsp.config("clangd", {
+  capabilities = capabilities,
   cmd = {
     "clangd",
     "--background-index",
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
-    "--function-arg-placeholders",
+    "--function-arg-placeholders=1",
   },
   filetypes = { "c", "cpp", "objc", "objcpp" },
 })
+vim.lsp.enable("clangd")
 
 -- C# ------------------------------------------------------------
-setup("omnisharp", {
-  -- OmniSharp será encontrado automaticamente pelo Mason
-  -- Descomente a linha abaixo se precisar apontar o executável manualmente:
-  -- cmd = { "omnisharp", "--languageserver" },
+vim.lsp.config("omnisharp", {
+  capabilities = capabilities,
   settings = {
     FormattingOptions = { EnableEditorConfigSupport = true },
     RoslynExtensionsOptions = { EnableAnalyzersSupport = true },
   },
 })
+vim.lsp.enable("omnisharp")
 
 -- Lua -----------------------------------------------------------
--- lazydev.nvim injeta os tipos do Neovim; lua_ls só precisa saber o runtime.
-setup("lua_ls", {
+vim.lsp.config("lua_ls", {
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = { version = "LuaJIT" },
@@ -49,9 +47,11 @@ setup("lua_ls", {
     },
   },
 })
+vim.lsp.enable("lua_ls")
 
 -- Python --------------------------------------------------------
-setup("pyright", {
+vim.lsp.config("pyright", {
+  capabilities = capabilities,
   settings = {
     python = {
       analysis = {
@@ -62,3 +62,4 @@ setup("pyright", {
     },
   },
 })
+vim.lsp.enable("pyright")
