@@ -10,12 +10,14 @@ return {
       require("copilot").setup {
         suggestion = {
           enabled = true,
-          auto_trigger = true,
+          auto_trigger = false,
           keymap = {
             accept = "<C-l>",
           },
         },
       }
+      -- Log Copilot Desabilitado
+      vim.cmd("Copilot disable")
     end,
   },
 
