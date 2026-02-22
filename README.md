@@ -1,3 +1,3 @@
 **This repo is my .config for neovim**
 
-I am constantly updating this repo as I discover new neovim features!
+I'm constantly updating this repo as I discover new neovim features!
