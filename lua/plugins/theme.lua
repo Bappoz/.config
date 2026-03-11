@@ -1,0 +1,1 @@
+/home/bappoz/.config/omarchy/current/theme/neovim.lua
