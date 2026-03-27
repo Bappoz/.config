@@ -4,8 +4,9 @@
 
 local map = vim.keymap.set
 
--- ; como atalho para entrar no modo de comando (igual ao NvChad)
-map("n", ";", ":", { desc = "CMD enter command mode" })
+-- ; e : como atalho para entrar no modo de comando (igual ao NvChad)
+map({ "n", "v" }, ";", ":", { desc = "CMD enter command mode", nowait = true })
+map({ "n", "v" }, ":", ":", { desc = "CMD enter command mode" })
 
 -- jk no modo insert para voltar ao normal (saída rápida)
 map("i", "jk", "<ESC>", { desc = "Exit insert mode" })
