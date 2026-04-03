@@ -1,12 +1,48 @@
 local themes = {
+  -- dark & moody
   "tokyonight",
-  "catppuccin",
-  "gruvbox",
+  "tokyonight-night",
+  "tokyonight-storm",
+  "tokyonight-moon",
   "kanagawa",
+  "kanagawa-wave",
+  "kanagawa-dragon",
+  "catppuccin",
+  "catppuccin-mocha",
+  "catppuccin-macchiato",
+  "catppuccin-frappe",
+  "catppuccin-latte",
   "rose-pine",
+  "rose-pine-moon",
+  "rose-pine-dawn",
+  -- classic
+  "gruvbox",
   "everforest",
-  "monokai-pro",
   "nord",
+  "onedark",
+  -- high contrast / unique
+  "monokai-pro",
+  "dracula",
+  "oxocarbon",
+  "cyberdream",
+  "eldritch",
+  -- nightfox family
+  "nightfox",
+  "nordfox",
+  "terafox",
+  "carbonfox",
+  "dawnfox",
+  "dayfox",
+  -- vscode-like
+  "vscode",
+  -- minimal / niche
+  "bamboo",
+  "flexoki-neovim",
+  "matteblack",
+  "aether",
+  "ethereal",
+  "hackerman",
+  "ansi",
 }
 
 local theme_file = vim.fn.stdpath("data") .. "/current_theme.txt"
@@ -38,11 +74,12 @@ local function apply_transparency()
 end
 
 local function set_colorscheme(name, dont_save)
-  local ok, err = pcall(vim.cmd.colorscheme, name)
+  local ok = pcall(vim.cmd.colorscheme, name)
   if not ok then
     vim.api.nvim_echo({ { "Tema nao encontrado: " .. name, "ErrorMsg" } }, false, {})
     return
   end
+  vim.g.current_theme_name = name
   if not dont_save then
     save_theme(name, vim.o.background)
   end
@@ -68,7 +105,6 @@ local function theme_next()
     end
   end
   local next_name = themes[(idx % #themes) + 1]
-  vim.g.current_theme_name = next_name
   set_colorscheme(next_name)
 end
 
@@ -82,19 +118,28 @@ return {
       end
     end,
     config = function(_, opts)
+      -- Define o background ANTES do setup aplicar o colorscheme
       local name, bg = get_saved_theme()
       if name and name ~= "" then
         vim.g.current_theme_name = name
         if bg and bg ~= "" then
           vim.o.background = bg
         end
-        -- colorscheme was mostly set by lazyvim, but transparency needs reapplying or we re-apply colorscheme
-        set_colorscheme(name, true)
       else
-        if not vim.g.current_theme_name then
-          vim.g.current_theme_name = themes[1]
-        end
+        vim.g.current_theme_name = themes[1]
       end
+
+      -- OBRIGATÓRIO: chama o setup do LazyVim (carrega keymaps, autocmds,
+      -- registra :LazyExtras, aplica colorscheme, etc.)
+      require("lazyvim").setup(opts)
+
+      -- Aplica transparência logo após o colorscheme ser definido pelo setup
+      apply_transparency()
+
+      -- Re-aplica transparência sempre que o colorscheme mudar
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        callback = apply_transparency,
+      })
 
       vim.api.nvim_create_user_command("ThemePick", theme_pick, { desc = "Escolher tema de cores" })
       vim.api.nvim_create_user_command("ThemeNext", theme_next, { desc = "Ir para o proximo tema" })

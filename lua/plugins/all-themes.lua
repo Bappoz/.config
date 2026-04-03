@@ -73,4 +73,45 @@ return {
 		lazy = true,
 		priority = 1000,
 	},
+	{
+		"EdenEast/nightfox.nvim",
+		lazy = true,
+		priority = 1000,
+	},
+	{
+		"dracula/vim",
+		name = "dracula",
+		lazy = true,
+		priority = 1000,
+	},
+	{
+		"navarasu/onedark.nvim",
+		lazy = true,
+		priority = 1000,
+	},
+	{
+		"nyoom-engineering/oxocarbon.nvim",
+		lazy = true,
+		priority = 1000,
+	},
+	{
+		"scottmckendry/cyberdream.nvim",
+		lazy = true,
+		priority = 1000,
+	},
+	{
+		"eldritch-theme/eldritch.nvim",
+		lazy = true,
+		priority = 1000,
+	},
+	{
+		"Mofiqul/vscode.nvim",
+		lazy = true,
+		priority = 1000,
+	},
+	{
+		"ficcdaf/ansi.nvim",
+		lazy = true,
+		priority = 1000,
+	},
 }
