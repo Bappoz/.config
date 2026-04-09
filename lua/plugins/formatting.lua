@@ -21,11 +21,6 @@ return {
         javascript = { "prettier" },
         typescript = { "prettier" },
       },
-      -- Formata ao salvar (500ms de timeout)
-      format_on_save = {
-        timeout_ms = 3000,
-        lsp_fallback = true,
-      },
     },
   },
 }

@@ -109,9 +109,4 @@ return {
 		lazy = true,
 		priority = 1000,
 	},
-	{
-		"ficcdaf/ansi.nvim",
-		lazy = true,
-		priority = 1000,
-	},
 }

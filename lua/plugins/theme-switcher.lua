@@ -42,7 +42,6 @@ local themes = {
   "aether",
   "ethereal",
   "hackerman",
-  "ansi",
 }
 
 local theme_file = vim.fn.stdpath("data") .. "/current_theme.txt"
