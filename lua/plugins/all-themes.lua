@@ -109,4 +109,9 @@ return {
 		lazy = true,
 		priority = 1000,
 	},
+	{
+		"xero/vantablack.nvim",
+		lazy = true,
+		priority = 1000,
+	},
 }
